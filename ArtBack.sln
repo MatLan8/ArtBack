@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtBack.Api", "ArtBack.Api\ArtBack.Api.csproj", "{DDC0E634-1180-4F60-A789-BD8A6BF4AB76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtBack.Domain", "ArtBack.Domain\ArtBack.Domain.csproj", "{8D144D6E-280C-4EBA-850C-D4365D11C471}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtBack.Infrastructure", "ArtBack.Infrastructure\ArtBack.Infrastructure.csproj", "{CC23FBF6-3FC4-47B7-92AB-11171B68C897}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtBack.Core", "ArtBack.Core\ArtBack.Core.csproj", "{D44F32BE-3E61-4D87-AC68-383E24DAD52C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDC0E634-1180-4F60-A789-BD8A6BF4AB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDC0E634-1180-4F60-A789-BD8A6BF4AB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDC0E634-1180-4F60-A789-BD8A6BF4AB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDC0E634-1180-4F60-A789-BD8A6BF4AB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D144D6E-280C-4EBA-850C-D4365D11C471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D144D6E-280C-4EBA-850C-D4365D11C471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D144D6E-280C-4EBA-850C-D4365D11C471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D144D6E-280C-4EBA-850C-D4365D11C471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC23FBF6-3FC4-47B7-92AB-11171B68C897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC23FBF6-3FC4-47B7-92AB-11171B68C897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC23FBF6-3FC4-47B7-92AB-11171B68C897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC23FBF6-3FC4-47B7-92AB-11171B68C897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D44F32BE-3E61-4D87-AC68-383E24DAD52C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D44F32BE-3E61-4D87-AC68-383E24DAD52C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D44F32BE-3E61-4D87-AC68-383E24DAD52C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D44F32BE-3E61-4D87-AC68-383E24DAD52C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
