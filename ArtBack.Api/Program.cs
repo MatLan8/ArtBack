@@ -1,13 +1,18 @@
 
+using ArtBack.Core.Commands.Artwork;
 using ArtBack.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateBetCommand).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateArtworkCommand).Assembly));
 builder.Services.AddControllers();
+
 builder.Services.AddDbContext<ArtDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 
 
 builder.Services.AddCors(options =>

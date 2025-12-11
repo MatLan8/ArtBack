@@ -1,6 +1,6 @@
 ﻿namespace ArtBack.Domain.Entities;
 
-public class Vendor: Entity
+public class Vendor: User
 {
     public required int ArtworkCount { get; set; }
     public required int SoldArtworkCount { get; set; }
