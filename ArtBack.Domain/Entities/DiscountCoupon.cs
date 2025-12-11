@@ -8,6 +8,8 @@ public class DiscountCoupon : Entity
     public required DateTime BeginAt { get; set; } = DateTime.UtcNow;
     public required DateTime ExpireAt { get; set; } = DateTime.UtcNow;
     public required bool IsActive { get; set; }
-    public required double StartingPrice { get; set; }
+    public required decimal StartingPrice { get; set; }
+    
+    
     public ICollection<Order>? Orders { get; set; }
 }
