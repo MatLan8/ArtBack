@@ -8,6 +8,7 @@ public class ArtworkDto
     public required string Name { get; set; }
     public required string Author { get; set; }
     public required string Description { get; set; }
+    public required DateTime CreatedAt { get; set; }
     public required decimal Price { get; set; }
     public required string Dimensions { get; set; }
     public required string ImageUrl { get; set; }
