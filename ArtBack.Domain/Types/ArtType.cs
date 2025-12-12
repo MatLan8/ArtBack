@@ -2,5 +2,9 @@
 
 public enum ArtType
 {
-    erwfewfwef
+    Painting,
+    Drawing,
+    DigitalArt,
+    MixedMedia,
+    Photography
 }
