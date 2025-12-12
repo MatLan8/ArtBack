@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArtBack.Core.Handlers.Artwork;
 
-public class CreateOrAddArtworkToCartCommandHandler(ArtDbContext dbContext)
-    : IRequestHandler<CreateOrAddArtworkToCartCommand, Guid>
+public class AddCartArtworkCommandHandler(ArtDbContext dbContext)
+    : IRequestHandler<AddCartArtworkCommand, Guid>
 {
-    public async Task<Guid> Handle(CreateOrAddArtworkToCartCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(AddCartArtworkCommand request, CancellationToken cancellationToken)
     {
         // 1. Patikrinti ar klientas turi aktyvų Cart
         var cart = await dbContext.Carts
@@ -24,7 +24,6 @@ public class CreateOrAddArtworkToCartCommandHandler(ArtDbContext dbContext)
         {
             cart = new Cart
             {
-                Id = Guid.NewGuid(),
                 ClientId = request.ClientId,
                 Status = Status.Active,
                 CreatedAt = DateTime.UtcNow,
@@ -60,7 +59,6 @@ public class CreateOrAddArtworkToCartCommandHandler(ArtDbContext dbContext)
         // 5. Jei nėra – sukurti naują CartArtwork
         var cartArtwork = new CartArtwork
         {
-            Id = Guid.NewGuid(),
             CartId = cart.Id,
             ArtworkId = request.ArtworkId,
             ArtworkCount = request.Count,

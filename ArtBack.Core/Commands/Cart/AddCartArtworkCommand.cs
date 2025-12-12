@@ -2,7 +2,7 @@
 
 namespace ArtBack.Core.Commands.Artwork;
 
-public class CreateOrAddArtworkToCartCommand : IRequest<Guid>
+public class AddCartArtworkCommand : IRequest<Guid>
 {
     public required Guid ClientId { get; set; }
     public required Guid ArtworkId { get; set; }
