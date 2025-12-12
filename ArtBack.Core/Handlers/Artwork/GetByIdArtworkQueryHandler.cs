@@ -20,6 +20,7 @@ public class GetByIdArtworkQueryHandler(ArtDbContext dbContext) : IRequestHandle
                 Name = a.Name,
                 Author = a.Author,
                 Description = a.Description,
+                CreatedAt = a.CreatedAt,
                 Price = a.Price,
                 Dimensions = a.Dimensions,
                 ImageUrl = a.ImageUrl,
