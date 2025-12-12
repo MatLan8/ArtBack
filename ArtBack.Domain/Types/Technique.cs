@@ -2,5 +2,9 @@
 
 public enum Technique
 {
-    
+    Impasto,
+    Glazing,
+    Layered,
+    Collage,
+    Digital
 }

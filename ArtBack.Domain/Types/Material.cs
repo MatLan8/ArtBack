@@ -2,5 +2,9 @@
 
 public enum Material
 {
-    qwdqwdqwd
+    Oil,
+    Acrylic,
+    Watercolor,
+    MixedMedia,
+    Digital
 }

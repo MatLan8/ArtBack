@@ -2,4 +2,9 @@
 
 public enum Style
 {
+    Abstract,
+    Contemporary,
+    Minimalist,
+    Modern,
+    Traditional
 }

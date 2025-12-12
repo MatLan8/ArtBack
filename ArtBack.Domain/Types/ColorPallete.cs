@@ -2,5 +2,9 @@
 
 public enum ColorPallete
 {
-    wefwefwefwef
+    Warm,
+    Cool,
+    Monochrome,
+    Vibrant,
+    Pastel
 }
