@@ -32,6 +32,7 @@ public class CreateArtworkCommandHandler(ArtDbContext dbContext) : IRequestHandl
             Dimensions = request.Dimensions,
             ImageUrl = request.ImageUrl,
             CategoryId = category.Id,
+            Category = category,
             VendorId = request.VendorId
         };
 

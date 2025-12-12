@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ArtBack.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Initialfixed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -257,16 +257,15 @@ namespace ArtBack.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     isDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    userId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    artworkId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                    ClientId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ArtworkId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LikedArtworks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LikedArtworks_Artworks_artworkId",
-                        column: x => x.artworkId,
+                        name: "FK_LikedArtworks_Artworks_ArtworkId",
+                        column: x => x.ArtworkId,
                         principalTable: "Artworks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -274,11 +273,6 @@ namespace ArtBack.Infrastructure.Migrations
                         name: "FK_LikedArtworks_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_LikedArtworks_Users_userId",
-                        column: x => x.userId,
-                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -340,19 +334,14 @@ namespace ArtBack.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_LikedArtworks_artworkId",
+                name: "IX_LikedArtworks_ArtworkId",
                 table: "LikedArtworks",
-                column: "artworkId");
+                column: "ArtworkId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LikedArtworks_ClientId",
                 table: "LikedArtworks",
                 column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LikedArtworks_userId",
-                table: "LikedArtworks",
-                column: "userId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderArtworks_ArtworkId",

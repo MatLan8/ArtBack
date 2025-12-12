@@ -204,25 +204,20 @@ namespace ArtBack.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("ClientId")
+                    b.Property<Guid>("ArtworkId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("artworkId")
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("char(36)");
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<Guid>("userId")
-                        .HasColumnType("char(36)");
-
                     b.HasKey("Id");
 
+                    b.HasIndex("ArtworkId");
+
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("artworkId");
-
-                    b.HasIndex("userId");
 
                     b.ToTable("LikedArtworks");
                 });
@@ -428,25 +423,21 @@ namespace ArtBack.Infrastructure.Migrations
 
             modelBuilder.Entity("ArtBack.Domain.Entities.LikedArtwork", b =>
                 {
-                    b.HasOne("ArtBack.Domain.Entities.Client", null)
-                        .WithMany("LikedArtworks")
-                        .HasForeignKey("ClientId");
-
                     b.HasOne("ArtBack.Domain.Entities.Artwork", "Artwork")
                         .WithMany("LikedArtworks")
-                        .HasForeignKey("artworkId")
+                        .HasForeignKey("ArtworkId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ArtBack.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("userId")
+                    b.HasOne("ArtBack.Domain.Entities.Client", "Client")
+                        .WithMany("LikedArtworks")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Artwork");
 
-                    b.Navigation("User");
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("ArtBack.Domain.Entities.Order", b =>

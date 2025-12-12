@@ -15,7 +15,7 @@ public class Artwork: Entity
     public Guid CategoryId { get; set; }
     
     public Vendor? Vendor { get; set; }
-    public Category? Category { get; set; }
+    public required Category Category { get; set; }
     
     public ICollection<CartArtwork>? CartArtwork { get; set; }
     public ICollection<LikedArtwork>? LikedArtworks { get; set; }
