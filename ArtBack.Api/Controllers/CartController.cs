@@ -6,8 +6,8 @@ namespace ArtBack.Api.Controllers;
 public class CartController: BaseController
 {
     
-    [HttpPost("Create")]
-    public async Task<IActionResult> Create(CreateOrAddArtworkToCartCommand command)
+    [HttpPost("AddCartArtwork")]
+    public async Task<IActionResult> AddCartArtwork(AddCartArtworkCommand command)
     {
         var result = await Mediator.Send(command);
         return Ok(result);
