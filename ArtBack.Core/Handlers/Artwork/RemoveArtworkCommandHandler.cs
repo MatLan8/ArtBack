@@ -15,6 +15,12 @@ public class RemoveArtworkCommandHandler(ArtDbContext dbContext) : IRequestHandl
             throw new Exception($"Artwork with ID {request.ArtworkId} not found");
 
         artwork.isDeleted = true;
+        
+        var vendor = await dbContext.Vendors
+            .AsNoTracking()
+            .Where(a => a.Id == artwork.VendorId).SingleOrDefaultAsync(cancellationToken);
+        if(vendor == null) throw new Exception("User not found");
+        vendor.ArtworkCount--;
 
         await dbContext.SaveChangesAsync(cancellationToken);
         return true;
