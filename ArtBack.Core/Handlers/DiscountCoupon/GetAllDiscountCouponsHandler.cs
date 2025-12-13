@@ -7,21 +7,14 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ArtBack.Infrastructure;
 
-public class GetAllDiscountCouponsHandler
+public class GetAllDiscountCouponsHandler(ArtDbContext dbContext)
     : IRequestHandler<GetAllDiscountCouponQuery, List<DiscountCouponDto>>
 {
-    private readonly ArtDbContext _context;
-
-    public GetAllDiscountCouponsHandler(ArtDbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<List<DiscountCouponDto>> Handle(
         GetAllDiscountCouponQuery request,
         CancellationToken cancellationToken)
     {
-        return await _context.DiscountCoupons
+        return await dbContext.DiscountCoupons
             .Select(c => new DiscountCouponDto
             {
                 Id = c.Id,

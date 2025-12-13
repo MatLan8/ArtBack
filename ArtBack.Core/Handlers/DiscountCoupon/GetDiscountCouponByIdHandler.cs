@@ -6,37 +6,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArtBack.Core.Handlers.DiscountCoupon;
 
-public class GetDiscountCouponByIdHandler
-    : IRequestHandler<GetByIdDiscountCouponQuery, DiscountCouponDto?>
+public class GetDiscountCouponByIdHandler(ArtDbContext dbContext)
+    : IRequestHandler<GetByIdDiscountCouponQuery, DiscountCouponDto>
 {
-    private readonly ArtDbContext _context;
-
-    public GetDiscountCouponByIdHandler(ArtDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<DiscountCouponDto?> Handle(
+    public async Task<DiscountCouponDto> Handle(
         GetByIdDiscountCouponQuery request,
         CancellationToken cancellationToken)
     {
-        return await Queryable.Select(
-                _context.DiscountCoupons.AsNoTracking(),
-                c => new DiscountCouponDto
-                {
-                    Id = c.Id,
-                    CouponCode = c.CouponCode,
-                    Description = c.Description,
-                    DiscountAmount = c.DiscountAmount,
-                    StartingPrice = c.StartingPrice,
-                    BeginAt = c.BeginAt,
-                    ExpireAt = c.ExpireAt,
-                    IsActive = c.IsActive
-                })
-            .FirstOrDefaultAsync(cancellationToken);
+        var coupon = await dbContext.DiscountCoupons
+            .AsNoTracking()
+            .Where(c => c.Id == request.Id)
+            .Select(c => new DiscountCouponDto
+            {
+                Id = c.Id,
+                CouponCode = c.CouponCode,
+                Description = c.Description,
+                DiscountAmount = c.DiscountAmount,
+                StartingPrice = c.StartingPrice,
+                BeginAt = c.BeginAt,
+                ExpireAt = c.ExpireAt,
+                IsActive = c.IsActive
+            })
+            .SingleOrDefaultAsync(cancellationToken);
 
-
-
-
+        return coupon
+               ?? throw new KeyNotFoundException(
+                   $"DiscountCoupon {request.Id} not found");
     }
 }

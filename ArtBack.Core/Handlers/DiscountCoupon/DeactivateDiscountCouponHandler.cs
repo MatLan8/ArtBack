@@ -5,28 +5,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArtBack.Core.Handlers.DiscountCoupon;
 
-public class DeactivateDiscountCouponHandler
+public class DeactivateDiscountCouponHandler(ArtDbContext dbContext)
     : IRequestHandler<DeactivateDiscountCouponCommand, bool>
 {
-    private readonly ArtDbContext _context;
-
-    public DeactivateDiscountCouponHandler(ArtDbContext context)
-    {
-        _context = context;
-    }
 
     public async Task<bool> Handle(
         DeactivateDiscountCouponCommand request,
         CancellationToken cancellationToken)
     {
-        var coupon = await _context.DiscountCoupons
+        var coupon = await dbContext.DiscountCoupons
             .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
 
         if (coupon == null)
             return false;
 
         coupon.IsActive = false;
-        await _context.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
         return true;
     }
 }

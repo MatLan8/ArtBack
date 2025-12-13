@@ -4,16 +4,9 @@ using MediatR;
 
 namespace ArtBack.Core.Handlers.DiscountCoupon;
 
-public class CreateDiscountCouponHandler
+public class CreateDiscountCouponHandler(ArtDbContext dbContext)
     : IRequestHandler<CreateDiscountCouponCommand, Guid>
 {
-    private readonly ArtDbContext _context;
-
-    public CreateDiscountCouponHandler(ArtDbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Guid> Handle(
         CreateDiscountCouponCommand request,
         CancellationToken cancellationToken)
@@ -28,9 +21,19 @@ public class CreateDiscountCouponHandler
             ExpireAt = request.ExpireAt,
             IsActive = true
         };
+        if (request.ExpireAt < request.BeginAt)
+        {
+            throw new ArgumentException("ExpireAt must be greater than BeginAt");
+        }
 
-        _context.DiscountCoupons.Add(coupon);
-        await _context.SaveChangesAsync(cancellationToken);
+        if (request.DiscountAmount < 0)
+        {
+            throw new ArgumentException("Discount amount must be greater than 0");
+        }
+
+        dbContext.DiscountCoupons.Add(coupon);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        
 
         return coupon.Id;
     }

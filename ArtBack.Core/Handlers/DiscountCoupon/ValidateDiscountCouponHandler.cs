@@ -1,26 +1,19 @@
+using ArtBack.Core.Queries.DiscountCoupon;
 using ArtBack.Domain.Dtos;
 using ArtBack.Infrastructure;
-using ArtBack.Core.Queries.DiscountCoupon;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtBack.Core.Handlers.DiscountCoupon;
 
-public class ValidateDiscountCouponHandler
+public class ValidateDiscountCouponHandler(ArtDbContext dbContext)
     : IRequestHandler<ValidateDiscountCouponQuery, ValidateDiscountCouponDto?>
 {
-    private readonly ArtDbContext _context;
-
-    public ValidateDiscountCouponHandler(ArtDbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<ValidateDiscountCouponDto?> Handle(
         ValidateDiscountCouponQuery request,
         CancellationToken cancellationToken)
     {
-        var coupon = await _context.DiscountCoupons
+        var coupon = await dbContext.DiscountCoupons
             .FirstOrDefaultAsync(c =>
                     c.CouponCode == request.Code &&
                     c.IsActive &&

@@ -5,15 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArtBack.Core.Handlers.DiscountCoupon;
 
-public class CalculateAutomaticDiscountHandler
+public class CalculateAutomaticDiscountHandler(ArtDbContext dbContext)
     : IRequestHandler<CalculateAutomaticDiscountQuery, decimal>
 {
-    private readonly ArtDbContext _context;
-
-    public CalculateAutomaticDiscountHandler(ArtDbContext context)
-    {
-        _context = context;
-    }
 
     public async Task<decimal> Handle(
         CalculateAutomaticDiscountQuery request,
@@ -26,7 +20,7 @@ public class CalculateAutomaticDiscountHandler
             discount += 10;
         }
         
-        var ordersCount = await _context.Orders
+        var ordersCount = await dbContext.Orders
             .CountAsync(o => o.ClientId == request.ClientId, cancellationToken);
 
         if (ordersCount >= 5)
