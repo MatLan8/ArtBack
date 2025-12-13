@@ -5,7 +5,7 @@ namespace ArtBack.Core.Commands.Artwork;
 
 public class UpdateArtWorkCommand : IRequest<Unit>
 {
-    public required Guid ArtworkId { get; set; }
+    public required Guid Id { get; set; }
     public string? Name { get; set; }
     public string? Author { get; set; }
     public string? Description { get; set; }
