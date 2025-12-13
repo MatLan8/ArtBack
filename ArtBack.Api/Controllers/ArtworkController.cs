@@ -20,6 +20,13 @@ public class ArtworkController : BaseController
         return Ok(result);
     }
     
+    [HttpGet("GetAllByVendorId")]
+    public async Task<IActionResult> GetAllByVendorId([FromQuery] GetAllArtworksByVendorIdQuery query)
+    {
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
+    
     
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateArtworkCommand command)
@@ -31,6 +38,13 @@ public class ArtworkController : BaseController
     
     [HttpPatch("Update")]
     public async Task<IActionResult> Update(UpdateArtWorkCommand command)
+    {
+        var result = await Mediator.Send(command);
+        return Ok(result);
+    }
+    
+    [HttpPatch("Remove")]
+    public async Task<IActionResult> Remove(RemoveArtworkCommand command)
     {
         var result = await Mediator.Send(command);
         return Ok(result);
