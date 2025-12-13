@@ -11,15 +11,14 @@ public class AddCartArtworkCommandHandler(ArtDbContext dbContext)
     : IRequestHandler<AddCartArtworkCommand, Guid>
 {
     public async Task<Guid> Handle(AddCartArtworkCommand request, CancellationToken cancellationToken)
-    {
-        // 1. Patikrinti ar klientas turi aktyvų Cart
+    {   
+        //ar turi cart
         var cart = await dbContext.Carts
             .FirstOrDefaultAsync(x => 
                 x.ClientId == request.ClientId &&
                 x.Status == Status.Active, 
                 cancellationToken);
-
-        // 2. Jei ne — sukurti naują Cart
+        //naujas cart
         if (cart == null)
         {
             cart = new Cart
@@ -34,20 +33,18 @@ public class AddCartArtworkCommandHandler(ArtDbContext dbContext)
             await dbContext.Carts.AddAsync(cart, cancellationToken);
         }
 
-        // 3. Patikrinti ar šis Artwork jau yra Cart’e
+        // ar yra artwork cart
         var existingItem = await dbContext.CartArtworks
             .FirstOrDefaultAsync(x =>
                 x.CartId == cart.Id &&
                 x.ArtworkId == request.ArtworkId,
                 cancellationToken);
-
+        //yra
         if (existingItem != null)
         {
-            // 4. Jei yra – tiesiog padidinti kiekį
             existingItem.ArtworkCount += request.Count;
             existingItem.TotalSum += request.Price * request.Count;
-
-            // Atnaujinti Cart totals
+            //summary
             cart.ArtworkCount += request.Count;
             cart.TotalSum += request.Price * request.Count;
 
@@ -56,7 +53,7 @@ public class AddCartArtworkCommandHandler(ArtDbContext dbContext)
             return cart.Id;
         }
 
-        // 5. Jei nėra – sukurti naują CartArtwork
+        // nėra - naujas
         var cartArtwork = new CartArtwork
         {
             CartId = cart.Id,
@@ -67,8 +64,7 @@ public class AddCartArtworkCommandHandler(ArtDbContext dbContext)
         };
 
         await dbContext.CartArtworks.AddAsync(cartArtwork, cancellationToken);
-
-        // 6. Atnaujinti Cart summary
+        //summarry
         cart.ArtworkCount += request.Count;
         cart.TotalSum += cartArtwork.TotalSum;
 

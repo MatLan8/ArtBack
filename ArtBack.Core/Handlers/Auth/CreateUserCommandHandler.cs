@@ -36,7 +36,7 @@ public class CreateUserCommandHandler(ArtDbContext dbContext) : IRequestHandler<
         }
         else
         {
-            var client = new Client
+            var client = new Domain.Entities.Client
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
