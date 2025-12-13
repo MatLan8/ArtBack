@@ -12,10 +12,10 @@ public class UpdateArtworkCommandHandler(ArtDbContext dbContext) : IRequestHandl
     public async Task<Unit> Handle(UpdateArtWorkCommand request, CancellationToken cancellationToken)
     {
         var artwork = await dbContext.Artworks
-            .FirstOrDefaultAsync(e => e.Id == request.ArtworkId, cancellationToken);
+            .FirstOrDefaultAsync(e => e.Id == request.Id, cancellationToken);
 
         if (artwork == null)
-            throw new Exception($"Artwork with ID {request.ArtworkId} not found");
+            throw new Exception($"Artwork with ID {request.Id} not found");
 
         if (!string.IsNullOrEmpty(request.Name))
             artwork.Name = request.Name;

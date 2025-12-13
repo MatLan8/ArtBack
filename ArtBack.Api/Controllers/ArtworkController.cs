@@ -43,7 +43,7 @@ public class ArtworkController : BaseController
         return Ok(result);
     }
     
-    [HttpPatch("Remove")]
+    [HttpDelete("Remove")]
     public async Task<IActionResult> Remove(RemoveArtworkCommand command)
     {
         var result = await Mediator.Send(command);
