@@ -21,5 +21,4 @@ public class CreateArtworkCommand : IRequest<bool>
     public required ColorPallete ColorPalette { get; set; }
     public required ArtType ArtType { get; set; }
     public required Period Period { get; set; }
-
 }

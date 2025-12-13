@@ -27,14 +27,12 @@ public class ArtworkController : BaseController
         return Ok(result);
     }
     
-    
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateArtworkCommand command)
     {
         var result = await Mediator.Send(command);
         return Ok(result);
     }
-    
     
     [HttpPatch("Update")]
     public async Task<IActionResult> Update(UpdateArtWorkCommand command)
@@ -49,9 +47,4 @@ public class ArtworkController : BaseController
         var result = await Mediator.Send(command);
         return Ok(result);
     }
-    
-
-    
-    
-    
 }
