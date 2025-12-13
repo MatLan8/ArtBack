@@ -1,6 +1,7 @@
 ﻿using ArtBack.Core.Commands.Artwork;
 using ArtBack.Infrastructure;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArtBack.Core.Handlers.Artwork;
 
@@ -9,7 +10,10 @@ public class CreateArtworkCommandHandler(ArtDbContext dbContext) : IRequestHandl
 {
     public async Task<bool> Handle(CreateArtworkCommand request, CancellationToken cancellationToken)
     {
-        
+        var vendor = await dbContext.Vendors
+            .AsNoTracking()
+            .Where(a => a.Id == request.VendorId).SingleOrDefaultAsync(cancellationToken);
+        if(vendor == null) throw new Exception("User not found");
         var category = new Domain.Entities.Category
         {
             Style = request.Style,
@@ -37,6 +41,7 @@ public class CreateArtworkCommandHandler(ArtDbContext dbContext) : IRequestHandl
         };
 
         await dbContext.Artworks.AddAsync(artwork, cancellationToken);
+        vendor.ArtworkCount++;
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return true;
