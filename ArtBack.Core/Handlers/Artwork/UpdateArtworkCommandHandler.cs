@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 namespace ArtBack.Core.Handlers.Artwork;
 
 
-public class UpdateArtworkCommandHandler(ArtDbContext dbcontext) : IRequestHandler<UpdateArtWorkCommand, Unit>
+public class UpdateArtworkCommandHandler(ArtDbContext dbContext) : IRequestHandler<UpdateArtWorkCommand, Unit>
 {
     public async Task<Unit> Handle(UpdateArtWorkCommand request, CancellationToken cancellationToken)
     {
-        var artwork = await dbcontext.Artworks
+        var artwork = await dbContext.Artworks
             .FirstOrDefaultAsync(e => e.Id == request.ArtworkId, cancellationToken);
 
         if (artwork == null)
@@ -38,7 +38,7 @@ public class UpdateArtworkCommandHandler(ArtDbContext dbcontext) : IRequestHandl
         }
         
         
-        var category = await dbcontext.Categories
+        var category = await dbContext.Categories
             .FirstOrDefaultAsync(c => c.Id == artwork.CategoryId, cancellationToken);
 
         if (category == null)
@@ -95,7 +95,7 @@ public class UpdateArtworkCommandHandler(ArtDbContext dbcontext) : IRequestHandl
             category.Period = period;
         }
         
-        await dbcontext.SaveChangesAsync(cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Unit.Value;
     }
