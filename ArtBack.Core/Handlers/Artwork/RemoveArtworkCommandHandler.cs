@@ -1,5 +1,4 @@
 ﻿using ArtBack.Core.Commands.Artwork;
-using ArtBack.Domain.Types;
 using ArtBack.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

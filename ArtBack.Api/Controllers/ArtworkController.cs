@@ -1,6 +1,5 @@
 ﻿using ArtBack.Core.Commands.Artwork;
 using ArtBack.Core.Queries.Artwork;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtBack.Api.Controllers;
