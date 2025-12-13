@@ -3,6 +3,7 @@ using ArtBack.Core.Commands.Auth;
 using ArtBack.Domain.Entities;
 using ArtBack.Infrastructure;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArtBack.Core.Handlers;
 
@@ -10,7 +11,12 @@ public class CreateUserCommandHandler(ArtDbContext dbContext) : IRequestHandler<
 {
     public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-
+        var user = await dbContext.Users
+            .AsNoTracking()
+            .Where(a => a.Username == request.Username).SingleOrDefaultAsync(cancellationToken);
+        if(user != null) throw new Exception("User with that username already exists");
+        
+        
         if (request.Role == "Vendor")
         {
             var vendor = new Vendor
