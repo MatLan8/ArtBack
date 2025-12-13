@@ -15,4 +15,10 @@
       <ProjectReference Include="..\ArtBack.Infrastructure\ArtBack.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\Client\" />
+      <Folder Include="Handlers\Client\" />
+      <Folder Include="Queries\Client\" />
+    </ItemGroup>
+
 </Project>
