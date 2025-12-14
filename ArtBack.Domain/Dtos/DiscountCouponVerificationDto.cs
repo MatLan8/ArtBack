@@ -6,4 +6,5 @@ public class DiscountCouponVerificationDto
     public string? ErrorCode { get; init; }
     public string? Message { get; init; }
     public double? DiscountValue { get; init; }
+    public Guid? CouponId { get; init; }
 }
