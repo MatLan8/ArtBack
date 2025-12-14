@@ -53,5 +53,13 @@ public class ClientController: BaseController
         var result = await Mediator.Send(query);
         return Ok(result);
     }
+    
+    [HttpGet("GetRecommendedArtworks")]
+    public async Task<IActionResult> GetRecommendedArtworks([FromQuery]  GetRecommendedArtworksQuery query)
+    {
+        var result = await Mediator.Send(query);
+        return Ok(result);
+        
+    }
 
 }
