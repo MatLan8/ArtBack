@@ -1,5 +1,6 @@
 ﻿
 using ArtBack.Core.Commands.Client;
+using ArtBack.Core.Queries.Client;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArtBack.Api.Controllers;
@@ -19,4 +20,12 @@ public class ClientController: BaseController
             return BadRequest(ex.Message); // "Artwork already liked"
         }
     }
+
+    [HttpGet("GetLikedArtworks")]
+    public async Task<IActionResult> GetLikedArtworks([FromQuery] GetLikedArtworksByClientIdQuery  query)
+    {
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
+
 }
