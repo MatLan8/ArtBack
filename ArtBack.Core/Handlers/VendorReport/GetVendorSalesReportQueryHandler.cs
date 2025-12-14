@@ -123,7 +123,7 @@ public class GetVendorSalesReportQueryHandler(ArtDbContext dbContext) : IRequest
             .SelectMany(o => o.OrderArtwork!.Where(oa => oa.Artwork != null && oa.Artwork.VendorId == vendorId).Select(oa => new
             {
                 o.Id,
-                BuyerName = ((Client)o.Client!).FirstName + " " + ((Client)o.Client!).LastName,
+                BuyerName = ((Domain.Entities.Client)o.Client!).FirstName + " " + ((Domain.Entities.Client)o.Client!).LastName,
                 ArtworkName = oa.Artwork!.Name,
                 oa.Artwork!.Price,
                 o.CreatedAt,
