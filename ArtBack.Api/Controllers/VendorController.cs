@@ -5,26 +5,23 @@ namespace ArtBack.Api.Controllers;
 
 public class VendorController : BaseController
 {
-    [HttpGet("SalesReport/{vendorId}")]
-    public async Task<IActionResult> GetSalesReport(Guid vendorId)
+    [HttpGet("SalesReport")]
+    public async Task<IActionResult> GetSalesReport([FromQuery] GetVendorSalesReportQuery query)
     {
-        var query = new GetVendorSalesReportQuery { VendorId = vendorId };
         var result = await Mediator.Send(query);
         return Ok(result);
     }
 
-    [HttpGet("ArtworksSalesDetails/{vendorId}")]
-    public async Task<IActionResult> GetArtworksSalesDetails(Guid vendorId)
+    [HttpGet("ArtworksSalesDetails")]
+    public async Task<IActionResult> GetArtworksSalesDetails([FromQuery] GetVendorArtworksSalesDetailsQuery query)
     {
-        var query = new GetVendorArtworksSalesDetailsQuery { VendorId = vendorId };
         var result = await Mediator.Send(query);
         return Ok(result);
     }
 
-    [HttpGet("Stats/{vendorId}")]
-    public async Task<IActionResult> GetStats(Guid vendorId)
+    [HttpGet("Stats")]
+    public async Task<IActionResult> GetStats([FromQuery] GetVendorStatsQuery query)
     {
-        var query = new GetVendorStatsQuery { VendorId = vendorId };
         var result = await Mediator.Send(query);
         return Ok(result);
     }
