@@ -2,5 +2,6 @@
 
 public enum DeliveryMethod
 {
-    wefwefwef
+    Courier,
+    Pickup
 }

@@ -46,28 +46,12 @@ public class ClientController: BaseController
             return BadRequest(ex.Message); // "Artwork already liked"
         }
     }
-    
-    [HttpGet("{id}/liked-artworks")]
-    public async Task<IActionResult> GetLikedArtworks(Guid id)
-    {
-        var result = await Mediator.Send(new GetLikedArtworksQuery
-        {
-            ClientId = id
-        });
 
+    [HttpGet("GetLikedArtworks")]
+    public async Task<IActionResult> GetLikedArtworks([FromQuery] GetLikedArtworksByClientIdQuery  query)
+    {
+        var result = await Mediator.Send(query);
         return Ok(result);
-    }
-    
-    [HttpDelete("{clientId}/liked-artworks/{artworkId}")]
-    public async Task<IActionResult> RemoveLikedArtwork(Guid clientId, Guid artworkId)
-    {
-        await Mediator.Send(new RemoveLikedArtworkCommand
-        {
-            ClientId = clientId,
-            ArtworkId = artworkId
-        });
-
-        return NoContent();
     }
 
 }

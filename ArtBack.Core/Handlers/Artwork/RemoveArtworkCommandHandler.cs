@@ -15,6 +15,20 @@ public class RemoveArtworkCommandHandler(ArtDbContext dbContext) : IRequestHandl
             throw new Exception($"Artwork with ID {request.ArtworkId} not found");
 
         artwork.isDeleted = true;
+        var likedArtwork = await dbContext.LikedArtworks.FirstOrDefaultAsync(a => a.ArtworkId == request.ArtworkId, cancellationToken);
+
+
+        if (likedArtwork != null)
+        {
+            likedArtwork.isDeleted = true;
+        }
+        
+        var cartArtwork = await dbContext.CartArtworks.FirstOrDefaultAsync(a => a.ArtworkId == request.ArtworkId, cancellationToken);
+
+        if (cartArtwork != null)
+        {
+            cartArtwork.isDeleted = true;
+        }
         
         var vendor = await dbContext.Vendors
             .AsNoTracking()

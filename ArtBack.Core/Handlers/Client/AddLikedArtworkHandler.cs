@@ -20,7 +20,7 @@ public class AddLikedArtworkHandler(ArtDbContext dbContext)
         
         //taip
         if (existingLike != null)
-            throw new InvalidOperationException("Artwork already liked");
+            throw new InvalidOperationException("Artwork is already liked");
         
         //ne
         var likedArtwork = new LikedArtwork
