@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArtBack.Api.Controllers;
 
-public class DiscountcouponController : BaseController
+public class DiscountCouponController : BaseController
 {
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll([FromQuery] GetAllDiscountCouponQuery query)
@@ -55,5 +55,13 @@ public class DiscountcouponController : BaseController
 
         return Ok(result);
     }
+    
+    [HttpGet("Verify")]
+    public async Task<IActionResult> Verify([FromQuery] VerifyDiscountCouponQuery query)
+    {
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
+    
 
 }
