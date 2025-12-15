@@ -1,4 +1,5 @@
 using ArtBack.Core.Commands.Order;
+using ArtBack.Domain.Entities;
 using ArtBack.Domain.Types;
 using ArtBack.Infrastructure;
 using MediatR;
@@ -10,7 +11,7 @@ public class CreateOrderCommandHandler(ArtDbContext dbContext) : IRequestHandler
 {
     public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        
+        using var tx = await dbContext.Database.BeginTransactionAsync(cancellationToken);
         var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.ClientId == request.ClientId, cancellationToken);
 
         if (cart == null)
@@ -75,9 +76,32 @@ public class CreateOrderCommandHandler(ArtDbContext dbContext) : IRequestHandler
             order.DiscountCouponId = request.DiscountCouponId.Value;
             order.DiscountCoupon = discountCoupon;
         }
+        
         dbContext.Orders.Add(order);
         await dbContext.SaveChangesAsync(cancellationToken);
+        
+        var cartArtworks = await dbContext.CartArtworks
+            .Where(ca => ca.CartId == cart.Id && !ca.isDeleted)
+            .ToListAsync(cancellationToken);
 
+        if (!cartArtworks.Any())
+        {
+            throw new Exception("Cart is empty");
+        }
+        
+        var orderArtworks = cartArtworks.Select(ca => new OrderArtwork
+        {
+            OrderId = order.Id,
+            ArtworkId = ca.ArtworkId,
+            ArtworkCount = ca.ArtworkCount,
+            TotalSum = ca.TotalSum
+        }).ToList();
+        
+        dbContext.OrderArtworks.AddRange(orderArtworks);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        
+        
+        await tx.CommitAsync(cancellationToken);
         return order.Id;
     }
 }
