@@ -2,8 +2,12 @@
 using ArtBack.Core.Commands.Artwork;
 using ArtBack.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
+
+StripeConfiguration.ApiKey =
+    builder.Configuration["Stripe:SecretKey"];
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateArtworkCommand).Assembly));
 builder.Services.AddControllers();

@@ -17,9 +17,14 @@ public class GetUserByLoginQueryHandler(ArtDbContext dbContext) : IRequestHandle
 
         if (user.Password != request.Password) throw new Exception("Wrong password");
         
+        
         var vendor = await dbContext.Vendors.Where(v => v.Id == user.Id).SingleOrDefaultAsync(cancellationToken);
         string role;
-        if (vendor != null)
+        if (user.Username == "Admin")
+        {
+            role = "Admin";
+        }
+        else if (vendor != null)
         {
             role = "Vendor";
         }
