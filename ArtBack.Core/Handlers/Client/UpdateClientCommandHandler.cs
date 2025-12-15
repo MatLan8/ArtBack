@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 
+
 namespace ArtBack.Core.Handlers.Client;
 
 public class UpdateClientCommandHandler
@@ -24,7 +25,7 @@ public class UpdateClientCommandHandler
             .FirstOrDefaultAsync(c => c.Id == request.ClientId, cancellationToken);
 
         if (client == null)
-            throw new Exception("Client not found");
+            throw new KeyNotFoundException("Client not found");
 
         client.FirstName = request.Client.FirstName ?? client.FirstName;
         client.LastName = request.Client.LastName ?? client.LastName;

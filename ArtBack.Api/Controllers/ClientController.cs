@@ -1,5 +1,4 @@
-﻿
-using ArtBack.Core.Commands.Client;
+﻿using ArtBack.Core.Commands.Client;
 using ArtBack.Core.Queries.Client;
 using ArtBack.Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -44,15 +43,12 @@ public class ClientController : BaseController
         return NoContent();
     }
 
-    [HttpGet("{clientId}/orders")]
-    public async Task<IActionResult> GetClientOrders(Guid clientId)
+    [HttpGet("{id}/orders")]
+    public async Task<IActionResult> GetOrders(Guid id)
     {
-        var result = await Mediator.Send(new GetClientOrdersQuery
-        {
-            ClientId = clientId
-        });
-
-        return Ok(result);
+        return Ok(await Mediator.Send(
+            new GetClientOrdersQuery { ClientId = id }
+        ));
     }
 
 }
