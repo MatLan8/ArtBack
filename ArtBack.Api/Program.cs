@@ -1,8 +1,12 @@
 
 using ArtBack.Core.Commands.Artwork;
+using ArtBack.Core.Handlers.Client;
 using ArtBack.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Stripe;
+using MediatR;
+using ArtBack.Core;
+using ArtBack.Core.Queries.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +20,12 @@ builder.Services.AddDbContext<ArtDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
+
+
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(ArtBack.Core.Commands.Client.AddLikedArtworkCommand).Assembly);
 });
 
 
