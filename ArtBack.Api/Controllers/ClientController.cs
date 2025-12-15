@@ -1,39 +1,54 @@
-﻿
-using ArtBack.Core.Commands.Client;
+﻿using ArtBack.Core.Commands.Client;
 using ArtBack.Core.Queries.Client;
+using ArtBack.Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using ArtBack.Domain.Dtos;
 
 namespace ArtBack.Api.Controllers;
 
-public class ClientController: BaseController
+[ApiController]
+[Route("api/client")]
+public class ClientController : BaseController
 {
-    [HttpPost("AddLikedArtwork")]
-    public async Task<IActionResult> AddLikedArtwork(AddLikedArtworkCommand command)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetClient(Guid id)
+        => Ok(await Mediator.Send(new GetClientByIdQuery { ClientId = id }));
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateClient(Guid id, ClientDto dto)
     {
-        try
-        {
-            var result = await Mediator.Send(command);
-            return Ok(result); 
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(ex.Message); // "Artwork already liked"
-        }
+        await Mediator.Send(new UpdateClientCommand { ClientId = id, Client = dto });
+        return NoContent();
     }
 
-    [HttpGet("GetLikedArtworks")]
-    public async Task<IActionResult> GetLikedArtworks([FromQuery] GetLikedArtworksByClientIdQuery  query)
+    [HttpGet("{id}/liked-artworks")]
+    public async Task<IActionResult> GetLikedArtworks(Guid id)
+        => Ok(await Mediator.Send(new GetLikedArtworksQuery { ClientId = id }));
+
+    [HttpPost("{id}/liked-artworks")]
+    public async Task<IActionResult> AddLikedArtwork(Guid id, AddLikedArtworkCommand command)
     {
-        var result = await Mediator.Send(query);
-        return Ok(result);
+        command.ClientId = id;
+        return Ok(await Mediator.Send(command));
     }
-    
-    [HttpGet("GetRecommendedArtworks")]
-    public async Task<IActionResult> GetRecommendedArtworks([FromQuery]  GetRecommendedArtworksQuery query)
+
+    [HttpDelete("{clientId}/liked-artworks/{artworkId}")]
+    public async Task<IActionResult> RemoveLikedArtwork(Guid clientId, Guid artworkId)
     {
-        var result = await Mediator.Send(query);
-        return Ok(result);
-        
+        await Mediator.Send(new RemoveLikedArtworkCommand
+        {
+            ClientId = clientId,
+            ArtworkId = artworkId
+        });
+        return NoContent();
+    }
+
+    [HttpGet("{id}/orders")]
+    public async Task<IActionResult> GetOrders(Guid id)
+    {
+        return Ok(await Mediator.Send(
+            new GetClientOrdersQuery { ClientId = id }
+        ));
     }
 
 }
