@@ -74,7 +74,8 @@ public class VerifyDiscountCouponQueryHandler(ArtDbContext dbContext) : IRequest
         return new DiscountCouponVerificationDto
         {
             IsValid = true,
-            DiscountValue = coupon.DiscountAmount/100
+            DiscountValue = coupon.DiscountAmount/100,
+            CouponId = coupon.Id,
         };
         
     }

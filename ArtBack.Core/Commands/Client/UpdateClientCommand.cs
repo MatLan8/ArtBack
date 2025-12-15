@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using ArtBack.Domain.DTOs;
 
 public class UpdateClientCommand : IRequest<Unit>
 {

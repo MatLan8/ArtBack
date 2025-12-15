@@ -1,5 +1,4 @@
 ﻿using ArtBack.Core.Queries.Client;
-using ArtBack.Domain.DTOs;
 using ArtBack.Infrastructure; 
 using MediatR;
 using ArtBack.Infrastructure;

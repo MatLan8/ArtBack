@@ -1,5 +1,3 @@
-﻿namespace ArtBack.Domain.DTOs;
-
 public class ClientDto
 {
     public string? FirstName { get; set; }

@@ -46,7 +46,14 @@ public class CartController: BaseController
     }
     
     
-    
+    [HttpDelete("DeleteAllCartArtworks/{id:guid}")]
+    public async Task<IActionResult> DeleteAllCartArtworks(Guid id)
+    {
+        var command = new DeleteAllCartArtworksCommand { clientId = id };
+        await Mediator.Send(command);
+
+        return Ok();
+    }
     
     
 }

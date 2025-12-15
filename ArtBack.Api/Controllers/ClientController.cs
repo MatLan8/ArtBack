@@ -1,8 +1,9 @@
 ﻿
 using ArtBack.Core.Commands.Client;
 using ArtBack.Core.Queries.Client;
-using ArtBack.Domain.DTOs;
+using ArtBack.Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using ArtBack.Domain.Dtos;
 
 namespace ArtBack.Api.Controllers;
 
@@ -47,6 +48,15 @@ public class ClientController: BaseController
         }
     }
 
+    [HttpGet("{id}/orders")]
+    public async Task<IActionResult> GetOrders(Guid id)
+    {
+        return Ok(await Mediator.Send(new GetClientOrdersQuery
+        {
+            ClientId = id
+        }));
+    }
+
     [HttpGet("GetLikedArtworks")]
     public async Task<IActionResult> GetLikedArtworks([FromQuery] GetLikedArtworksByClientIdQuery  query)
     {
@@ -54,6 +64,7 @@ public class ClientController: BaseController
         return Ok(result);
     }
     
+ 
     [HttpGet("GetRecommendedArtworks")]
     public async Task<IActionResult> GetRecommendedArtworks([FromQuery]  GetRecommendedArtworksQuery query)
     {
@@ -61,5 +72,4 @@ public class ClientController: BaseController
         return Ok(result);
         
     }
-
 }
